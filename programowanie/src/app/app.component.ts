@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MenuComponent } from './menu/menu.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MenuComponent]
 })
-export class AppComponent {
-  title = 'programowanie';
+export class AppComponent implements OnInit {
+  title = 'my-angular-project';
+  isLoggedIn = false;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.checkLoginStatus();
+    this.isLoggedIn = this.authService.isLoggedIn;
+  }
 }
